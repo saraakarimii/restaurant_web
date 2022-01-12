@@ -1,15 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+    
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'admin_panel' %}">profile</a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'main' %}">main</a>
+  </li>
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'password_change' %}">change password</a>
+  </li>
+
+{%endblock nav%}
+{%block content%}
 <body>
     
     <a  href="{% url 'foods' %}">foods</a>
     
     <a  href="{% url 'categories' %}">categories</a>
 </body>
-</html>
+{%endblock content%}

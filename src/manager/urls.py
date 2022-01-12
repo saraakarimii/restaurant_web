@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from .views import *
 urlpatterns = [
-    path('',admin_panel,name='panel'),
+    path('',admin_panel,name='admin_panel'),
     path('food/', AllFoodList.as_view(),name='foods'),
     path('food/add', AddFood.as_view(),name='fadd'),
     path('food/<int:pk>/update', EditeFood.as_view(),name='fedite'),

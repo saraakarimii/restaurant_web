@@ -74,8 +74,9 @@ class meanuList(ListView):
 
 class addmenu_item(CreateView):
     model=MenuItem
-    fields=["price",'food','quantity']
+    fields=["price",'food','quantity','photo']
     template_name='pages/branche/add_menu_item.html'
+    success_url ="/branche/menu/"
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         branche_user=Branche.objects.get(user=self.request.user)

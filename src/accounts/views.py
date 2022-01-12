@@ -32,9 +32,10 @@ def login_success(request):
     """
     Redirects users based on whether they are in the admins group
     """
-    if request.user.is_staff:
-        return redirect("/branche/")
+    
     if request.user.is_superuser:
         return redirect("/manager/")
+    if request.user.is_staff:
+        return redirect("/branche/")
     else:
         return render(request,'pages/costumer/customer_panel.html')
