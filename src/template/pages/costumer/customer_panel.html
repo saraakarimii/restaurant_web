@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+    
+  
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'password_change' %}">change password</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'branches' %}">branches</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'card' %}">card</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'all_address' %}">address</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'order_history' %}">history</a>
+  </li>
+  
+  
+  
+  
+{% endblock nav %}
+{%block content%}
+
+    <h1>hi {{user.email}}</h1>
+
+
+    <a  href="{% url 'edite_profile' user.pk %}">edite your profile</a>
+{%endblock content%}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+  {% if user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'branche_panel' %}">profile</a>
+      </li>
+    {%endif%}
+    
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'main' %}">main</a>
+  </li>
+  
+ 
+  
+{% endblock nav %}
+{%block content%}
+
+<a href="{% url 'add_item' %}" class="btn btn-info">add new item</a>
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            
+            <th scope="col">name</th>
+            <th scope="col">price</th>
+            <th scope="col">photo</th>
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+       
+        {% for object in object_list %}
+     
+        <tr>
+
+            <th>{{ object.food.name }}</th>
+            <th>{{ object.price }}</th>
+            
+            <th><img src="{{ MEDIA_URL }}/media/{{object.branche}}/food/{{object.food.name}}.jpg" width="200px"
+              height="200px" /></th>
+            
+
+        
+            <th>
+            <a href="{% url 'edite_menu_item' object.pk %}" class="btn btn-danger btn-sm">edite</a>
+            </th>
+
+            <th>
+            <a href="{% url 'delete_menu_item' object.pk %}" class="btn btn-danger btn-sm">delete</a>
+            </th>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> 
+</div>
+
+{%endblock content%}

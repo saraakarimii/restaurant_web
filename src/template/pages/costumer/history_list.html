@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+    
+  
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'password_change' %}">change password</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'branches' %}">branches</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'card' %}">card</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'all_address' %}">address</a>
+  </li>
+  
+  
+  
+{% endblock nav %}
+{%block content%}
+   {% for object in object_list %}
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                
+                <th scope="col"> branches:{{object.choosen_branch}}  | date:{{object.ordered_date.date}}</th>
+                
+                {% comment %} <th scope="col">edite</th>
+                <th scope="col">delete</th> {% endcomment %}
+
+            </tr>
+        </thead>
+        <tbody id="list2">
+            {%for i in object.order_item.all %}
+            <tr>
+            
+                <th>{{i.item.food.name}}</th>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%endfor%}
+    
+{%endblock content%}

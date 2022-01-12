@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{%block content%}
+<a href="{% url 'fadd' %}" class="btn btn-info">add new food</a>
+    
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            
+            <th scope="col">name</th>
+            <th scope="col">edite</th>
+            <th scope="col">delete</th>
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+       
+        {% for object in object_list %}
+     
+        <tr>
+
+            <th>{{ object.name }}</th>
+            
+
+            <th>
+                <a href="{% url 'fedite' object.pk %}" class="btn btn-info">edit</a>
+            </th>
+            <th>
+            <a href="{% url 'fdelete' object.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </th> 
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> 
+</div>
+
+{%endblock content%}

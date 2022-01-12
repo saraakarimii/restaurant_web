@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+  {% if user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'branche_panel' %}">profile</a>
+      </li>
+    {%endif%}
+    
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'main' %}">main</a>
+  </li>
+  
+ 
+  
+{% endblock nav %}
+{%block content%}
+{%for i in bills%}
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            
+            <th scope="col">owner</th>
+            <th scope="col">ordered date</th>
+            <th scope="col">branche status</th>
+            <th scope="col">customer status</th>
+            <th scope="col">detail</th>
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+       
+       
+     
+        <tr>
+
+            <th>{{ i.owner }}</th>
+            <th>{{ i.ordered_date }}</th>
+            <th>{{ i.branche_status }}</th>
+            <th>{{ i.customer_status }}</th>
+
+            <th>
+            <a href="{% url 'orders_item' i.pk %}" class="btn btn-info btn-sm">detail</a>
+            </th>
+
+        </tr>
+       
+    </tbody>
+</table>
+{% endfor %}
+{% endblock %}

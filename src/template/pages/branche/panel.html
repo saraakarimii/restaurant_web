@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+    
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'password_change' %}">change password</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'orders' %}">orders</a>
+  </li>
+  
+</li>
+  
+  
+  
+{% endblock nav %}
+{%block content%}
+        {%if user.branche.resturant_mother.name %}
+           <h1>your resturan name: {{user.branche.resturant_mother.name}} </h1>
+          {%if user.branche.is_main%}
+            <h1>main branche*</h1>
+            {%endif%}
+          <a  href="{% url 'menulist_b' %}">your menu</a>
+          
+        {%else%}
+        <form method="POST">
+          {% csrf_token %}
+          <label for="cheese">is this a main branche</label><br>
+             <input type="radio"  name="is_main" value="yes">yes<br>
+             <input type="radio"  name="is_main" value="no">no
+          
+              <button type=submit>sign up</button>
+        </form>
+        {%endif%}
+            
+
+
+
+
+
+
+    <a  href="{% url 'edite_branch' user.branche.pk %}">edite your branche</a>
+    <a  href="{% url 'edite_profile' user.pk %}">edite your user profile</a>
+{%endblock content%}

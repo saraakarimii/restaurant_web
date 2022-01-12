@@ -1,0 +1,12 @@
+
+.bg-main {
+    /* The image used */
+    background-image: url('https://s4.uupload.ir/files/r_65pw.jpg')  ;
+    height: 20cm;
+    background-size: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }

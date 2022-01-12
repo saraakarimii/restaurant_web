@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+  {% if user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'branche_panel' %}">profile</a>
+      </li>
+    {%endif%}
+    
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'main' %}">main</a>
+  </li>
+  
+ 
+  
+{% endblock nav %}
+{%block content%}
+{% for object in object_list %}
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            
+            <th scope="col">name</th>
+            <th scope="col">price</th>
+            <th scope="col">quantity</th>
+            
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+       
+       
+     
+        <tr>
+            {%for i in object.order_item.all %}
+            <th>{{i.item.food.name}}</th>
+            <th>{{i.item.price}}</th>
+            <th>{{i.quantity}}</th>
+            
+        
+            {%endfor%}
+
+
+        </tr>
+       
+    </tbody>
+</table>
+    {%endfor%}
+{% endblock %}

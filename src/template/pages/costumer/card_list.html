@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+    {% if user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'customer_panel' %}">profile</a>
+      </li>
+    {%endif%}
+
+    
+  
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'main' %}">main</a>
+      </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'branches' %}">branches</a>
+  </li>
+</li>
+{% endblock nav %}
+{%block content%}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            
+            <th scope="col">name</th>
+            {% comment %} <th scope="col">edite</th>
+            <th scope="col">delete</th> {% endcomment %}
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+        <tr>
+      
+
+        {% for o in orders %}
+     
+        
+
+            <th>{{ o.item.food.name }}</th>
+            
+        
+    
+            <th>{{ o.quantity }}</th>
+            <th>{{ o.item.branche.name }}</th>
+             
+
+            {% comment %} <th>
+                <a href="{% url 'fedite' object.pk %}" class="btn btn-info">edit</a>
+            </th>{% endcomment %}
+            <th>
+            <a href="{% url 'fdelete' o.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </th>   
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> 
+    
+
+    <p>Choose your address</p>
+    <a href="{% url 'add_address' %}" class="btn btn-info">add new address</a>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {% for mainad in mainad %}
+        <input type="radio" name="add">{{mainad }}
+       
+        
+        {%endfor%}
+        {% for i in otheradd %}
+
+          <input type="radio"  name="add" value={{i.city}},{{i.address}},{{i.postal_code}}>{{i.city}},{{i.address}},{{i.postal_code}}
+          
+    
+        {%endfor%}
+    <input type="submit" value="Submit">
+    </form> 
+</div>
+
+{%endblock content%}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'admin:index' %}">admin <span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'main' %}">main</a>
+  </li>
+  <li class="nav-item">
+  
+    <a class="nav-link" href="{% url 'login' %}">Login</a>
+  </li>
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'signup' %}">signup</a>
+  </li>
+  
+{% endblock nav %}
+{%block content%}
+
+    <form method="POST">
+        {% csrf_token %}
+        
+            <label for="cheese">name</label>
+            <input id="quantity" type="text" name='name'><br>
+            
+            
+                {%for i in choices%}
+                <input type="radio"  name="resturant" value={{i.name}}>{{i.name}}<br>
+              
+                {%endfor%}
+             
+       
+        
+        {% comment %} {{resturantRegisterForm.as_p}} {% endcomment %}
+        <button type=submit>sign up</button>
+    </form>
+{%endblock content%}

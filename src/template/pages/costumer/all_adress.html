@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class="nav-item active">
+   
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'customer_panel' %}">profile</a>
+      </li>
+    
+  
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'password_change' %}">change password</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'branches' %}">branches</a>
+  </li>
+  
+{% endblock nav %}
+{%block content%}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            
+            <th scope="col">main address</th>
+            
+            {% comment %} <th scope="col">edite</th>
+            <th scope="col">delete</th> {% endcomment %}
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+        <tr>
+           
+            <th>{{mainad}}</th>
+           
+            
+            
+            
+        </tr>
+    </tbody>
+
+    <thead>
+        <tr>
+            
+            <th scope="col">city</th>
+            <th scope="col">describe</th>
+            <th scope="col">postal_code</th>
+            <th scope="col">edite</th>
+            <th scope="col">delete</th> 
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+        <tr>
+      
+
+        {% for o in customer_address %}
+     
+        
+
+            <th>{{ o.city }}</th>
+            
+        
+    
+            <th>{{ o.address }}</th>
+            <th>{{ o.postal_code }}</th>
+             
+
+            <th>
+                <a href="{% url 'edite_add' o.pk %}" class="btn btn-info">edit</a>
+            </th>
+            <th>
+            <a href="{% url 'delete_add' o.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </th>
+
+        </tr>
+        {% endfor %}
+    </tbody> 
+</table>
+{% endblock content %}

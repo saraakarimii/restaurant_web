@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block style %}
+        <link href={% static "css/style.css" %} rel="stylesheet" />
+{% endblock %}
+{% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'admin:index' %}">admin <span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'main' %}">main</a>
+  </li>
+  <li class="nav-item">
+  
+    <a class="nav-link" href="{% url 'login' %}">Login</a>
+  </li>
+{% endblock nav %}  
+
+
+{%block content%}
+<section class="hero-area">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 mb-4 mb-lg-0">
+				<div class="video-player">
+					<img src={% static "assets/img/signup.JPEG" %} style="width:70%;height:70%">
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="block">
+					<h2>sign up</h2>
+					<ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+						<li class="list-inline-item">
+							<a href={% url 'csignup' %} target="_blank" class="btn btn-main">sign up as customer</a>		
+						</li>
+    
+					</ul>
+          <ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+          <li class="list-inline-item">
+            <a href={% url 'rsignup' %} target="_blank" class="btn btn-main">sign up as resturant</a>		
+          </li>
+        </ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	
+{% comment %} <div class="container-fluid bg-dark">
+  <div class="row justify-content-md-center">
+    <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
+    <div class="col-6 col-sm-4">jjjj</div>
+  
+    <!-- Force next columns to break to new line at md breakpoint and up -->
+    <div class="w-100 d-none d-md-block"></div>
+  
+    <div class="col-6 col-sm-4"><a href={% url 'csignup' %}>sign up as customer</a></div>
+    <div class="col-6 col-sm-4"><a href={% url 'rsignup' %}>sign up as resturant</a></div>
+  </div>
+          
+</div> {% endcomment %}
+
+    
+    
+{%endblock content%}

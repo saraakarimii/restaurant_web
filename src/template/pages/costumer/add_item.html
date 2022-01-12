@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+<li class="nav-item active">
+    
+  
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'password_change' %}">change password</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'branches' %}">branches</a>
+
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'card' %}">card</a>
+  </li>
+  
+{% endblock nav %}
+{%block content%}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {%endif%}
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                
+                <th scope="col">name</th>
+                <th scope="col">price</th>
+                <th scope="col">photo</th>
+
+            </tr>
+        </thead>
+        <tbody id="list2">
+        
+        
+            <tr>
+
+                <th>{{ object.food.name }}</th>
+                <th>{{ object.price }}</th>
+                
+
+                <th>
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <input id="quantity" type="number" name='quantity'>
+                        <input id="submit" type="submit" value="اضافه کردن ">
+                    </form>
+                </th>
+                <th>{% comment %} 
+                <a href="{% url 'fdelete' object.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </th>  {% endcomment %}
+
+            </tr>
+        </tbody>
+    </table> 
+        
+{%endblock content%}

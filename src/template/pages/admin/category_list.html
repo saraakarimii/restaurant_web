@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{%block content%}
+<a href="{% url 'cadd' %}" class="btn btn-info">add new category</a>
+    
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            
+            <th scope="col">name</th>
+            <th scope="col">edite</th>
+            <th scope="col">delete</th>
+
+        </tr>
+    </thead>
+    <tbody id="list2">
+       
+        {% for object in object_list %}
+     
+        <tr>
+
+            <th>{{ object.Category_title }}</th>
+            
+
+            <th>
+                <a href="{% url 'cedite' object.pk %}" class="btn btn-info">edit</a>
+            </th>
+            <th>
+            <a href="{% url 'cdelete' object.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </th> 
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> 
+</div>
+
+{%endblock content%}

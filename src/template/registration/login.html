@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block nav %}
+
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'main' %}">main</a>
+  </li>
+
+
+
+   <li class="nav-item">
+    <a class="nav-link" href="{% url 'signup' %}">signup</a>
+  </li>
+{% endblock nav %}
+{%block content%}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type='submit>'>log in</button>
+        <button type='submit>'><a href={% url 'signup' %}>sign up</button>
+        <button type='submit>'><a href={% url 'password_reset' %}>forgot my password</button>
+    </form>
+
+{%endblock content%}
