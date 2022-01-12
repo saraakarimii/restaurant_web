@@ -42,27 +42,71 @@
             <th>{{ i.owner }}</th>
             <th>{{ i.ordered_date }}</th>
             <th>{{ i.branche_status }}
-              <button id="myBtn">Open Modal</button>
+              
+
+                <!-- Trigger/Open The Modal -->
+                <button class="modal-button" href="#myModal1">change</button>
+
+                <!-- The Modal -->
+                <div id="myModal1" class="modal">
+
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <span class="close">×</span>
+                      
+                    </div>
+                    <div class="modal-body">
+                      <form method="POST">
+                        {% csrf_token %}
+                        <label for="cheese">choose new status</label><br>
+                           
+                           <input type="radio"  name="branche_status" value={{i.id}},recorded>recorded<br>
+                           <input type="radio"  name="branche_status" value={{i.id}},sent>sent<br>
+                           <input type="radio"  name="branche_status" value={{i.id}},delivered>delivered<br>
+                           
+                            <button type=submit>update</button>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                    
+                    </div>
+                  
+             </th>
+            <th>{{ i.customer_status }}
+              <button class="modal-button" href="#myModal2">change</button>
 
               <!-- The Modal -->
-              <div id="myModal" class="modal">
-              
+              <div id="myModal2" class="modal">
+
                 <!-- Modal content -->
                 <div class="modal-content">
-                  <span class="close">&times;</span>
+                  <div class="modal-header">
+                    <span class="close">×</span>
+                    
+                  </div>
+                  <div class="modal-body">
                   <form method="POST">
-                    {% csrf_token %}
-                    <label for="cheese">choose new status</label><br>
-                       <input type="radio"  name="is_main" value='ordered'>ordered<br>
-                       <input type="radio"  name="is_main" value="no">no
-                    
-                        <button type=submit>sign up</button>
-                  </form>
+                  {% csrf_token %}
+                  <label for="cheese">choose new status</label><br>
+                    
+                    <input type="radio"  name="customer_status" value={{i.id}},recorded>recorded<br>
+                    <input type="radio"  name="customer_status" value={{i.id}},sent>sent<br>
+                    <input type="radio"  name="customer_status" value={{i.id}},delivered>delivered<br>
+                     
+                      <button type=submit>update</button>
+                </form> 
+                  </div>
+                  <div class="modal-footer">
+                   
+                  </div>
                 </div>
-              
+
               </div>
-             </th>
-            <th>{{ i.customer_status }}</th>
+
+            
+              
+            </th>
 
             <th>
             <a href="{% url 'orders_item' i.pk %}" class="btn btn-info btn-sm">detail</a>

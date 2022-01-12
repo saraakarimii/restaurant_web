@@ -118,6 +118,48 @@ class orders(TemplateView):
         
         return context
 
+    def post(self, request):
+        b_status=request.POST.get('branche_status')
+        c_status=request.POST.get('customer_status')
+       
+        
+        
+        if b_status:
+            b_status=str(request.POST.get('branche_status')).split(',')
+            
+            if b_status[1]=='recorded':
+                targeted_bill=bill.objects.get(id=b_status[0])
+                targeted_bill.branche_status="R"
+                targeted_bill.save()
+            if b_status[1]=='sent':
+                targeted_bill=bill.objects.get(id=b_status[0])
+                targeted_bill.branche_status="S"
+                targeted_bill.save()
+            if b_status[1]=='delivered':
+                targeted_bill=bill.objects.get(id=b_status[0])
+                targeted_bill.branche_status="D"
+                targeted_bill.save()
+
+        elif c_status:
+            c_status=str(request.POST.get('customer_status')).split(',')
+            
+            if c_status[1]=='recorded':
+                targeted_bill=bill.objects.get(id=c_status[0])
+                targeted_bill.customer_status="R"
+                targeted_bill.save()
+            if c_status[1]=='sent':
+                targeted_bill=bill.objects.get(id=c_status[0])
+                targeted_bill.customer_status="S"
+                targeted_bill.save()
+            if c_status[1]=='delivered':
+                targeted_bill=bill.objects.get(id=c_status[0])
+                targeted_bill.customer_status="D"
+                targeted_bill.save()
+        return HttpResponseRedirect(reverse_lazy('orders'))
+        
+
+
+        
 # class (TemplateView):
 #     template_name='pages/branche/order_detail.html'
 #     def get_context_data(self, **kwargs):
