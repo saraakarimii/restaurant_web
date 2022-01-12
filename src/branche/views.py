@@ -115,6 +115,7 @@ class orders(TemplateView):
         context = super().get_context_data(**kwargs)
         branche_user=Branche.objects.get(user=self.request.user)
         context['bills']=bill.objects.filter(choosen_branch=branche_user).all()
+        
         return context
 
 # class (TemplateView):
