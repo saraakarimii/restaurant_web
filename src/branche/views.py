@@ -6,8 +6,7 @@ from django.views.generic import ListView, UpdateView,DeleteView,CreateView,Temp
 from django.urls import reverse_lazy
 from django.http.response import HttpResponseRedirect, HttpResponse
 from accounts.models import CostumUser
-def panel_branche(req):
-    return render(req,'pages/branche/panel.html')
+
 
 class panel(TemplateView):
     def post(self, request):
@@ -88,7 +87,7 @@ class addmenu_item(CreateView):
 
 class edit_menu(UpdateView):
     model=MenuItem
-    fields=["price",'food','quantity']
+    fields=["price",'food','quantity','photo']
     template_name='pages/edite_add.html'
     success_url ="/branche/menu/"
 

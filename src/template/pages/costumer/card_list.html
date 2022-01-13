@@ -5,6 +5,9 @@
     <li class="nav-item">
         <a class="nav-link" href="{% url 'customer_panel' %}">profile</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
     {%endif%}
 
     
@@ -31,17 +34,22 @@
     <thead>
         <tr>
             
-            <th scope="col">name</th>
+            <th scope="col">food name</th>
+            <th scope="col">quantity</th>
+            <th scope="col">branche</th>
+            <th scope="col">each item price</th>
+            <th scope="col">total price</th>
             {% comment %} <th scope="col">edite</th>
             <th scope="col">delete</th> {% endcomment %}
 
         </tr>
     </thead>
     <tbody id="list2">
+        {% for o in orders %}
         <tr>
       
 
-        {% for o in orders %}
+        
      
         
 
@@ -51,7 +59,8 @@
     
             <th>{{ o.quantity }}</th>
             <th>{{ o.item.branche.name }}</th>
-             
+            <th>{{ o.item.price }}</th>
+            <th>{{ o.get_total }}</th>
 
             {% comment %} <th>
                 <a href="{% url 'fedite' object.pk %}" class="btn btn-info">edit</a>
@@ -59,11 +68,23 @@
             <th>
             <a href="{% url 'fdelete' o.pk %}" class="btn btn-danger btn-sm">Delete</a>
             </th>   
-
+            
         </tr>
         {% endfor %}
     </tbody>
 </table> 
+<table>
+    <thead>
+        <tr>
+            {% for i in bill_obj %}
+            
+            <th scope="col">final price</th>
+            <th scope="col">{{i.card_total}}</th>
+            {%endfor%}
+
+        </tr>
+    </thead>
+</table>
     
 
     <p>Choose your address</p>

@@ -53,7 +53,7 @@ class EditeProfile(UpdateView):
     template_name='pages/edite_add.html'
     success_url ="/costumer/"
 
-class OrderItemDelete(DeleteView):
+class AddressDelete(DeleteView):
     model=Address
     template_name='pages/delete.html'
     success_url ="/costumer/bill/"
@@ -68,20 +68,22 @@ class AllBrancheList(ListView):
     model=Branche
     template_name='pages/costumer/branche_list.html'
 
-class meanuList(ListView):
+class meanuList(TemplateView):
     template_name='pages/costumer/menu_list.html'
     model=MenuItem
-    def get_queryset(self):
-     
-        qs =super().get_queryset() 
-     
-        return qs.filter(branche__id=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list']=MenuItem.objects.filter(branche__id=kwargs['pk'])
+        context['branche']=MenuItem.objects.filter(branche__id=kwargs['pk']).first()
+        return context
+    
 
 
 class OrderItemDelete(DeleteView):
-    model=Address
+    model=OrderItem
     template_name='pages/delete.html'
-    success_url ="/costumer/all_address/"
+    success_url ="/costumer/bill/"
 
 class bill_view(TemplateView):
     PermissionError_message='you should add from one branche'
@@ -101,6 +103,7 @@ class bill_view(TemplateView):
             customer=Customer.objects.get(device=device)
         
         context['orders'] = OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O")
+        context['bill_obj']=bill.objects.filter(owner=customer).filter(customer_status="O")
         
         return context
 
@@ -163,7 +166,7 @@ class Add(DetailView):
 
             order, created=bill.objects.get_or_create(owner=customer,customer_status='O')
             
-            orderitem, created=OrderItem.objects.get_or_create(bill=order,item=item)
+            
         
             
             quantity=request.POST.get('quantity')
@@ -173,6 +176,7 @@ class Add(DetailView):
                 pk=self.kwargs['pk']
                 return redirect(f"/costumer/branche/food/{pk}")
 
+            orderitem, created=OrderItem.objects.get_or_create(bill=order,item=item)
             item.quantity-=int(quantity)
             
             orderitem.quantity=quantity

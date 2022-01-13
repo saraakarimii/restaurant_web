@@ -49,16 +49,25 @@
                             <li class="nav-item">
                             <a class="nav-link" href="{% url 'admin_panel' %}">profile</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                              </li>
                           {% elif user.is_staff %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'branche_panel' %}">profile</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                              </li>
 
 
                           {% elif user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'customer_panel' %}">profile</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                              </li>
                           {% else %}
                           
                                 <li class="nav-item">
@@ -163,7 +172,7 @@
                                                 <div class="col-md-3">
                                                    
                                                     <div class="product-block bg-light">
-                                                        <img class="d-block w-100" src="https://fakeimg.pl/800x400/?retina=1&text=Product 1&font=noto" alt="Product">
+                                                        <img class="d-block w-100" src="{{ i.photo_url|default_if_none:'#' }}" alt="Product">
                                                         <h4>{{i.food.name}}</h4>
                                                         <small>{{i.branche.name}}</small>
                                                         <p>{{i.price}}</p>

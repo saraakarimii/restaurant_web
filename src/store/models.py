@@ -69,6 +69,10 @@ class MenuItem(models.Model):
     photo=models.ImageField(upload_to=get_uploade_path,blank=True,null=True)
     quantity=models.PositiveIntegerField()
    
+    @property
+    def photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
 
 class OrderItem(models.Model):
     item=models.ForeignKey(MenuItem,on_delete=models.CASCADE,null=True,related_name="order_item")
@@ -82,7 +86,7 @@ class OrderItem(models.Model):
 
     @property
     def get_total(self):
-        total=self.item.price * self.quantity
+        total=int(self.item.price) * int(self.quantity)
         return total
     
 
@@ -115,7 +119,7 @@ class bill(models.Model):
     branche_status=models.CharField(choices=ORDER_STATUS,max_length=1,null=True,blank=True)
     ordered_date=models.DateTimeField(auto_now_add=True)
     address=models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
-    total_price=models.IntegerField()
+    total_price=models.IntegerField(null=True,blank=True)
     
     def __str__(self):
         return str(self.owner)

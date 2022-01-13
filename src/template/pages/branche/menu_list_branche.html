@@ -36,7 +36,7 @@
             <th>{{ object.food.name }}</th>
             <th>{{ object.price }}</th>
             
-            <th><img src="{{ MEDIA_URL }}/media/{{object.branche}}/food/{{object.food.name}}.jpg" width="200px"
+            <th><img src="{{ object.photo_url|default_if_none:'#' }}" width="200px"
               height="200px" /></th>
             
 
