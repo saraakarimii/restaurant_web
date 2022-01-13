@@ -23,7 +23,7 @@ class main(TemplateView):
     def post(self, request):
         if request.is_ajax():
             text = request.POST.get('text')
-            
+            res_text=request.POST.get('res_text')
             value = request.POST.get('value')
             value_r = request.POST.get('value_r')
             
@@ -104,6 +104,21 @@ class main(TemplateView):
                         'resturan': [],
                         'msg' : "doesn't match any files",
                     })
+            elif res_text:
+                
+                res= Branche.objects.filter(name__startswith=res_text).all()
+                
+                if res:
+                    return JsonResponse({
+                    "resturan_search":list(res.values_list("name","id"))
+                    #    "description":list(p.values_list('description', flat=True))
+                    })
+                else:
+                    return JsonResponse({
+                        "resturan_search": [],
+                        'msg' : "doesn't match any files",
+                    })
+            
             elif text:
                     Items = MenuItem.objects.filter(food__name__startswith=text)
                     
