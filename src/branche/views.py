@@ -6,8 +6,9 @@ from django.views.generic import ListView, UpdateView,DeleteView,CreateView,Temp
 from django.urls import reverse_lazy
 from django.http.response import HttpResponseRedirect, HttpResponse
 from accounts.models import CostumUser
+from permissions import is_staff_required
 
-
+@is_staff_required()
 class panel(TemplateView):
     def post(self, request):
         main=request.POST.get('is_main')
@@ -23,7 +24,7 @@ class panel(TemplateView):
     template_name='pages/branche/panel.html'
     
     
-
+@is_staff_required()
 class branche_complete(TemplateView):
     template_name='pages/branch_complete.html'
 
@@ -46,6 +47,7 @@ class branche_complete(TemplateView):
         branche_user.save()
         return HttpResponseRedirect(reverse_lazy('branche_panel'))
 
+@is_staff_required()
 class main_branche_complete(TemplateView):
     template_name='pages/main_branche_complete.html'
 
@@ -61,7 +63,7 @@ class main_branche_complete(TemplateView):
         branche_user.save()
         return HttpResponseRedirect(reverse_lazy('branche_panel'))
 
-
+@is_staff_required()
 class meanuList(ListView):
     template_name='pages/branche/menu_list_branche.html'
     model=MenuItem
@@ -71,6 +73,7 @@ class meanuList(ListView):
         branche_user=Branche.objects.get(user=self.request.user)
         return qs.filter(branche=branche_user)
 
+@is_staff_required()
 class addmenu_item(CreateView):
     model=MenuItem
     fields=["price",'food','quantity','photo']
@@ -85,30 +88,34 @@ class addmenu_item(CreateView):
         print(self.object)
         return super().form_valid(form)
 
+@is_staff_required()
 class edit_menu(UpdateView):
     model=MenuItem
     fields=["price",'food','quantity','photo']
     template_name='pages/edite_add.html'
     success_url ="/branche/menu/"
 
+@is_staff_required()
 class delete_menu(DeleteView):
     model=MenuItem
     template_name='pages/delete.html'
     success_url ="/branche/menu/"
 
 
+@is_staff_required()
 class Edite_branche_Profile(UpdateView):
     model=Branche
     fields="__all__"
     template_name='pages/edite_add.html'
     success_url ="/branche/"
 
+@is_staff_required()
 class EditeProfile(UpdateView):
     model=CostumUser
     fields=["username","first_name","last_name","email","address"]
     template_name='pages/edite_add.html'
     success_url ="/branche/"
-
+@is_staff_required()
 class orders(TemplateView):
     template_name='pages/branche/orders.html'
     def get_context_data(self, **kwargs):
@@ -160,14 +167,8 @@ class orders(TemplateView):
 
 
         
-# class (TemplateView):
-#     template_name='pages/branche/order_detail.html'
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         branche_user=Branche.objects.get(user=self.request.user)
-#         context['obj']=bill.objects.filter(id=kwargs['pk']).all()
-#         return context
 
+@is_staff_required()
 class order_details(ListView):
     model=bill
     template_name='pages/branche/order_detail.html'

@@ -10,12 +10,13 @@ from django.views.generic.edit import FormMixin
 from django.contrib import messages
 from .forms import AddAddressForm
 from django.contrib.auth.decorators import login_required
+from permissions import customer_required
+
+@customer_required()
+class customer_panel(TemplateView):
+    template_name='pages/costumer/customer_panel.html'
 
 @login_required
-def customer_panel(request):
-    return render(request,'pages/costumer/customer_panel.html')
-
-
 def Add_Adress(request):
   if request.method == "POST":
     city=request.POST.get('city')
@@ -31,7 +32,7 @@ def Add_Adress(request):
     
   forma=AddAddressForm()
   return render(request, 'pages/costumer/add_address.html',{'form': forma})
-
+@customer_required()
 class AllAddressList(TemplateView):
     template_name='pages/costumer/all_adress.html'
     def get_context_data(self, **kwargs):   
@@ -40,34 +41,34 @@ class AllAddressList(TemplateView):
        
         context['customer_address']=Customer.objects.get(user=self.request.user).address.all()
         return context
-
+@customer_required()
 class OrderHistoryList(ListView):
     model=bill
     template_name='pages/costumer/history_list.html'
     def get_queryset(self):
         return bill.objects.filter(owner=self.request.user.customer).filter(customer_status="R").all()
-    
+@customer_required()
 class EditeProfile(UpdateView):
     model=CostumUser
     fields=["username","first_name","last_name","email",]
     template_name='pages/edite_add.html'
     success_url ="/costumer/"
-
+@customer_required()
 class AddressDelete(DeleteView):
     model=Address
     template_name='pages/delete.html'
     success_url ="/costumer/bill/"
-
+@customer_required()
 class EditeAddress(UpdateView):
     model=Address
     fields ="__all__"
     template_name='pages/edite_add.html'
     success_url ="/costumer/all_address/"
-
+@customer_required()
 class AllBrancheList(ListView):
     model=Branche
     template_name='pages/costumer/branche_list.html'
-
+@customer_required()
 class meanuList(TemplateView):
     template_name='pages/costumer/menu_list.html'
     model=MenuItem
@@ -79,12 +80,12 @@ class meanuList(TemplateView):
         return context
     
 
-
+@customer_required()
 class OrderItemDelete(DeleteView):
     model=OrderItem
     template_name='pages/delete.html'
     success_url ="/costumer/bill/"
-
+@customer_required()
 class bill_view(TemplateView):
     PermissionError_message='you should add from one branche'
     
@@ -143,7 +144,7 @@ class bill_view(TemplateView):
 
 
  
-
+@customer_required()
 class Add(DetailView):
     model=MenuItem
     template_name='pages/costumer/add_item.html'
