@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{%load static%}
+{% block style %}
+        <link href={% static "css/style1.css" %} rel="stylesheet" />
+{% endblock %}
 {% block nav %}
 <li class="nav-item active">
     <a class="nav-link" href="{% url 'admin:index' %}">admin <span class="sr-only">(current)</span></a>
@@ -18,20 +22,31 @@
   
 {% endblock nav %}
 {%block content%}
+<section class="hero-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="video-player">
+          <img src={% static "assets/img/admin_panel.JPG" %} style="width:70%;height:70%">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="block">
+          <form method="POST">
+            {% csrf_token %}
+                <h2>resturan name</h2>
+                <input id="quantity" type="text" name='res_name'>
+                <h2>your branche name:</h2>
+                <input id="quantity" type="text" name='branche_name'>
+         
+                <button type=submit class="btn btn-main">sign up</button>
+          </form>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>	
 
-    <form method="POST">
-        {% csrf_token %}
-        
-            <label for="cheese">resturan name</label>
-            <input id="quantity" type="text" name='res_name'>
 
-            <label for="cheese">branche name</label>
-            <input id="quantity" type="text" name='branche_name'>
-            
-            
-       
-        
-        {% comment %} {{resturantRegisterForm.as_p}} {% endcomment %}
-        <button type=submit>sign up</button>
-    </form>
 {%endblock content%}

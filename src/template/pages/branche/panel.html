@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{%load static%}
+{% block style %}
+        <link href={% static "css/style1.css" %} rel="stylesheet" />
+{% endblock %}
 {% block nav %}
 <li class="nav-item active">
     
@@ -25,29 +29,72 @@
 {% endblock nav %}
 {%block content%}
         {%if user.branche.resturant_mother.name %}
-           <h1>your resturan name: {{user.branche.resturant_mother.name}} </h1>
-          {%if user.branche.is_main%}
-            <h1>main branche*</h1>
-            {%endif%}
-          <a  href="{% url 'menulist_b' %}">your menu</a>
-          
+        <section class="hero-area">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="video-player">
+                  <img src={% static "assets/img/admin_panel.JPG" %} style="width:70%;height:70%">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="block">
+                  <h2>your resturan name:  </h2>
+                  <h2>{{user.branche.resturant_mother.name}}</h2>
+                  {%if user.branche.is_main%}
+                  <p>main branche*</p>
+                  {%endif%}
+                  <ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+                    <li class="list-inline-item">
+                      <a href="{% url 'menulist_b' %}"  class="btn btn-main">your menu</a>		
+                    </li>
+            
+                  </ul>
+                  <ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+                  <li class="list-inline-item">
+                    <a href="{% url 'edite_branch' user.branche.pk %}"  class="btn btn-main">edite your branche</a>		
+                  </li>
+                </ul>
+                <ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+                  <li class="list-inline-item">
+                    <a href="{% url 'edite_profile' user.pk %}" class="btn btn-main">edite your user profile</a>		
+                  </li>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>	
+        
         {%else%}
-        <form method="POST">
-          {% csrf_token %}
-          <label for="cheese">is this a main branche</label><br>
-             <input type="radio"  name="is_main" value="yes">yes<br>
-             <input type="radio"  name="is_main" value="no">no
-          
-              <button type=submit>sign up</button>
-        </form>
+        <section class="hero-area">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="video-player">
+                  <img src={% static "assets/img/admin_panel.JPG" %} style="width:70%;height:70%">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="block">
+                  <h2>is this a main branche?</h2>
+                  <form method="POST" class="form-check" >
+                    {% csrf_token %}
+        
+                       <input type="radio" class="form-check-input" name="is_main" value="yes"><h3>yes</h3><br>
+                       <input type="radio" class="form-check-input"  name="is_main" value="no"><h3>no</h3><br>
+                    
+                        <button type=submit class="btn btn-main">sign up</button>
+                  </form>
+                </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>	
+        
+
         {%endif%}
             
 
-
-
-
-
-
-    <a  href="{% url 'edite_branch' user.branche.pk %}">edite your branche</a>
-    <a  href="{% url 'edite_profile' user.pk %}">edite your user profile</a>
 {%endblock content%}
