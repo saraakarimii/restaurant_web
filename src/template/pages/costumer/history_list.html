@@ -29,7 +29,7 @@
         <thead>
             <tr>
                 
-                <th scope="col"> branches:{{object.choosen_branch}}  | date:{{object.ordered_date.date}}</th>
+                <th scope="col"> branches:{{object.choosen_branch}}  | date:{{object.jalali_ordered_date.date}}</th>
                 
                 {% comment %} <th scope="col">edite</th>
                 <th scope="col">delete</th> {% endcomment %}
@@ -40,11 +40,18 @@
             {%for i in object.order_item.all %}
             <tr>
             
-                <th>{{i.item.food.name}}</th>
+                <th>{{i.item.food.name}}<br>quantity:{{i.quantity}}<br>price:{{i.item.price}}  </th>
             </tr>
             {%endfor%}
+            <tr>
+          
+              <th scope="col"> total price  {{object.card_total}}</th>
+              
+        
+          </tr>
         </tbody>
     </table>
+
     {%endfor%}
     
 {%endblock content%}

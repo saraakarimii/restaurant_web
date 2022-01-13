@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{%load static%}
+{% block style %}
+        <link href={% static "css/style1.css" %} rel="stylesheet" />
+{% endblock %}
 {% block nav %}
 <li class="nav-item active">
     
@@ -22,9 +26,47 @@
 {%endblock nav%}
 {%block content%}
 <body>
+  <section class="hero-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="video-player">
+            <img src={% static "assets/img/admin_panel.JPG" %} style="width:70%;height:70%">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="block">
+            <h2>admin panel</h2>
+            <ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+              <li class="list-inline-item">
+                <a href="{% url 'foods' %}"  class="btn btn-main">Foods</a>		
+              </li>
+      
+            </ul>
+            <ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+            <li class="list-inline-item">
+              <a href="{% url 'categories' %}"  class="btn btn-main">Categories</a>		
+            </li>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>	
+  {% comment %} <div class="container-fluid bg-dark">
+    <div class="row justify-content-md-center">
+      <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
+      <div class="col-6 col-sm-4">jjjj</div>
     
-    <a  href="{% url 'foods' %}">foods</a>
+      <!-- Force next columns to break to new line at md breakpoint and up -->
+      <div class="w-100 d-none d-md-block"></div>
     
-    <a  href="{% url 'categories' %}">categories</a>
+      <div class="col-6 col-sm-4"><a href={% url 'csignup' %}>sign up as customer</a></div>
+      <div class="col-6 col-sm-4"><a href={% url 'rsignup' %}>sign up as resturant</a></div>
+    </div>
+            
+  </div> {% endcomment %}
+  
+ 
 </body>
 {%endblock content%}

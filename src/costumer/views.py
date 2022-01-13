@@ -47,12 +47,14 @@ class OrderHistoryList(ListView):
     template_name='pages/costumer/history_list.html'
     def get_queryset(self):
         return bill.objects.filter(owner=self.request.user.customer).filter(customer_status="R").all()
+
 @customer_required()
 class EditeProfile(UpdateView):
     model=CostumUser
     fields=["username","first_name","last_name","email",]
     template_name='pages/edite_add.html'
     success_url ="/costumer/"
+    
 @customer_required()
 class AddressDelete(DeleteView):
     model=Address

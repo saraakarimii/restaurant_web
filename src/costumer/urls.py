@@ -3,9 +3,10 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
 from .views import *
+
 urlpatterns = [
     path('',customer_panel,name='customer_panel'),
-    path('<int:pk>/edite/',EditeProfile.as_view(),name='edite_profile'),
+    path('<int:pk>/edite/',EditeProfile.as_view(),name='edite_costmer_profile'),
     path('add_address/',Add_Adress,name='add_address'),
     path('all_address/',AllAddressList.as_view(),name='all_address'),
     path('address/<int:pk>/edite',EditeAddress.as_view(),name="edite_add"),

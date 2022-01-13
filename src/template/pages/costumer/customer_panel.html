@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{%load static%}
+{% block style %}
+        <link href={% static "css/style.css" %} rel="stylesheet" />
+{% endblock %}
 {% block nav %}
 <li class="nav-item active">
     
@@ -28,9 +32,46 @@
   
 {% endblock nav %}
 {%block content%}
+<section class="hero-area">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 mb-4 mb-lg-0">
+				<div class="video-player">
+					<img src={% static "assets/img/costumer_panel.JPG" %} style="width:70%;height:70%">
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="block">
+					<h2>{{user.email}}</h2>
+					<ul class="list-inline wow fadeInUp" data-wow-duration=".5s" data-wow-delay=".7s">
+						<li class="list-inline-item">
+							<a href="{% url 'edite_costmer_profile' user.pk %}"  class="btn btn-main">edite your profile</a>		
+						</li>
+    
+					</ul>
+        
+				</div>
+			</div>
+		</div>
+	</div>
+</section>	
+{% comment %} <div class="container-fluid bg-dark">
+  <div class="row justify-content-md-center">
+    <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
+    <div class="col-6 col-sm-4">jjjj</div>
+  
+    <!-- Force next columns to break to new line at md breakpoint and up -->
+    <div class="w-100 d-none d-md-block"></div>
+  
+    <div class="col-6 col-sm-4"><a href={% url 'csignup' %}>sign up as customer</a></div>
+    <div class="col-6 col-sm-4"><a href={% url 'rsignup' %}>sign up as resturant</a></div>
+  </div>
+          
+</div> {% endcomment %}
 
-    <h1>hi {{user.email}}</h1>
+
+    {% comment %} <h1>hi {{user.email}}</h1>
 
 
-    <a  href="{% url 'edite_profile' user.pk %}">edite your profile</a>
+    <a  href="{% url 'edite_profile' user.pk %}">edite your profile</a> {% endcomment %}
 {%endblock content%}
