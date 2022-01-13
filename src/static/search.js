@@ -53,7 +53,8 @@ $( document ).ready(function() {
                     var div3= document.createElement("div"); 
                     div3.className="product-block bg-light";
                     var Img = document.createElement("img");
-                    Img.setAttribute('src', "https://fakeimg.pl/800x400/?retina=1&text=Product 1&font=noto");
+                    src="/media/"+value[5]
+                    Img.setAttribute('src', src);
                     Img.className="d-block w-100"
                     var food_name=document.createElement("h4");
                     food_name.append(value[0])

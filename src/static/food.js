@@ -31,7 +31,7 @@
             dataType: 'json',
             data:data,
             success: function(res) {
-               console.log("r*********essss")
+               
                $('#ajax_r').empty()
                 show_res(res)
    
@@ -44,8 +44,7 @@
             
         if ( data['resturan'] ){
             for (const [key, value] of Object.entries(data['resturan'])) {
-                console.log("*", key,value); 
-                console.log(data['resturan'])
+                
                 
                     my_main_tag = $('#ajax_r')
                
@@ -63,7 +62,7 @@
                     a1.className="btn btn-sm btn-danger";
                     pk=value[1];
                     url='costumer/branche/'+pk
-                    console.log(url)
+                    
                     a1.setAttribute('href',url);
                     a1.append("menu");
                     // var sec_div=document.createElement("div");
@@ -87,7 +86,7 @@
 
     
     function send_ajax(input_data){
-        console.log("ajaxsent")
+        
         
         
         data={
@@ -118,18 +117,15 @@
             
         if ( data['food'] ){
             for (const [key, value] of Object.entries(data['food'])) {
-                console.log("*", key,value); 
-                console.log(data['food'])
-                
 
-                
-                 
-                var div2= document.createElement("div"); 
+                    var div2= document.createElement("div"); 
                     div2.className="col-md-3";
                     var div3= document.createElement("div"); 
                     div3.className="product-block bg-light";
-                    var Img = document.createElement("img");
-                    Img.setAttribute('src', "https://fakeimg.pl/800x400/?retina=1&text=Product 1&font=noto");
+                    var Img = document.createElement("img") ;
+                    src="/media/"+value[5]
+                    
+                    Img.setAttribute('src', src);
                     Img.className="d-block w-100"
                     var food_name=document.createElement("h4");
                     food_name.append(value[0])

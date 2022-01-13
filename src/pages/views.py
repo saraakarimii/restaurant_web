@@ -36,7 +36,7 @@ class main(TemplateView):
                 print("_____________________________")
             
                 if sum:
-                    data=list(sum.values('food__name',"branche__name","price",'food__id',"branche__id"))
+                    data=list(sum.values('food__name',"branche__name","price",'food__id',"branche__id","photo"))
                     
                     js_f=[]
                     a=[]
@@ -47,6 +47,7 @@ class main(TemplateView):
                         a.append(i['price'])
                         a.append(i['food__id'])
                         a.append(i['branche__id'])
+                        a.append(i["photo"])
                         js_f.append(tuple(a))
                         a=[]
                     return JsonResponse({
@@ -62,8 +63,9 @@ class main(TemplateView):
                 foods = MenuItem.objects.all()
                 
                 if foods:
-                    data=list(foods.values('food__name',"branche__name","price",'food__id',"branche__id"))
-                    
+                    data=foods.values('food__name',"branche__name","price",'food__id',"branche__id","photo")
+                    print(data)
+                    print("""""""""""""""""""""""""")
                     js_f=[]
                     a=[]
                     for i in data:
@@ -73,6 +75,7 @@ class main(TemplateView):
                         a.append(i['price'])
                         a.append(i['food__id'])
                         a.append(i['branche__id'])
+                        a.append(i["photo"])
                         js_f.append(tuple(a))
                         a=[]
                     return JsonResponse({
@@ -106,7 +109,7 @@ class main(TemplateView):
                     
                     
                     if Items:
-                        data=list(Items.values('food__name',"branche__name","price",'food__id',"branche__id"))
+                        data=list(Items.values('food__name',"branche__name","price",'food__id',"branche__id","photo"))
                         print(data)
                         js=[]
                         a=[]
@@ -117,6 +120,7 @@ class main(TemplateView):
                             a.append(i['price'])
                             a.append(i['food__id'])
                             a.append(i['branche__id'])
+                            a.append(i["photo"])
                             js.append(tuple(a))
                             a=[]
                         
