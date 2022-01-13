@@ -133,7 +133,8 @@ class orders(TemplateView):
         
         if b_status:
             b_status=str(request.POST.get('branche_status')).split(',')
-            
+            print(b_status)
+            print("_________________")
             if b_status[1]=='recorded':
                 targeted_bill=bill.objects.get(id=b_status[0])
                 targeted_bill.branche_status="R"
@@ -149,6 +150,8 @@ class orders(TemplateView):
 
         elif c_status:
             c_status=str(request.POST.get('customer_status')).split(',')
+            print(c_status)
+            print("++++++++++++++++++++++++++")
             
             if c_status[1]=='recorded':
                 targeted_bill=bill.objects.get(id=c_status[0])

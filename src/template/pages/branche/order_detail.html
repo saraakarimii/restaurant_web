@@ -30,20 +30,21 @@
     <tbody id="list2">
        
        
-     
+     {%for i in object.order_item.all %}
         <tr>
-            {%for i in object.order_item.all %}
+            
             <th>{{i.item.food.name}}</th>
             <th>{{i.item.price}}</th>
             <th>{{i.quantity}}</th>
             
         
-            {%endfor%}
+           
 
 
         </tr>
-       
+        {%endfor%}
     </tbody>
 </table>
     {%endfor%}
+    <a href="{% url 'orders'  %}" class="btn btn-info btn-sm">back</a>
 {% endblock %}

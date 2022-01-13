@@ -11,6 +11,8 @@ from django.contrib import messages
 from .forms import AddAddressForm
 from django.contrib.auth.decorators import login_required
 from permissions import customer_required
+from django.urls import reverse_lazy
+from django.http.response import HttpResponseRedirect
 
 @customer_required()
 class customer_panel(TemplateView):
@@ -51,7 +53,7 @@ class OrderHistoryList(ListView):
 @customer_required()
 class EditeProfile(UpdateView):
     model=CostumUser
-    fields=["username","first_name","last_name","email",]
+    fields=["username","first_name","last_name",]
     template_name='pages/edite_add.html'
     success_url ="/costumer/"
     
@@ -141,6 +143,7 @@ class bill_view(TemplateView):
             bil.customer_status='R'
             bil.choosen_branch=branche
             bil.save()
+            return HttpResponseRedirect(reverse_lazy('customer_panel'))
 
 
 
