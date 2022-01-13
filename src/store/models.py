@@ -68,7 +68,8 @@ class MenuItem(models.Model):
     food=models.ForeignKey(Food,on_delete=models.CASCADE,related_name="menu_item",null=True)
     photo=models.ImageField(upload_to=get_uploade_path,blank=True,null=True)
     quantity=models.PositiveIntegerField()
-   
+    
+    
     @property
     def photo_url(self):
         if self.photo and hasattr(self.photo, 'url'):

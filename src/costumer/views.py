@@ -175,11 +175,14 @@ class Add(DetailView):
             if item.quantity < int(quantity) :
                 messages.warning(request, "no enough food." )
                 pk=self.kwargs['pk']
-                return redirect(f"/costumer/branche/food/{pk}")
+                return redirect("/costumer/bill/")
 
             orderitem, created=OrderItem.objects.get_or_create(bill=order,item=item)
+            branche=OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O").first().item.branche
+            bil=bill.objects.filter(owner=self.request.user.customer).filter(customer_status="O").first()
             item.quantity-=int(quantity)
-            
+            bil.choosen_branch=branche
+            bil.save()
             orderitem.quantity=quantity
             item.save()
             orderitem.save()
