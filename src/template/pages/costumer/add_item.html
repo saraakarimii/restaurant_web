@@ -27,9 +27,10 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-      </li>
-  {% else %}
+    </li>
   
+  
+  {%endif%}
   <li class="nav-item">
     <a class="nav-link" href="{% url 'branches' %}">branches</a>
 
@@ -37,7 +38,6 @@
   <li class="nav-item">
     <a class="nav-link" href="{% url 'card' %}">card</a>
   </li>
-  
 {% endblock nav %}
 {%block content%}
     {% if messages %}
@@ -47,7 +47,7 @@
         {% endfor %}
     </ul>
     {%endif%}
-
+    
     <table class="table table-striped mt-4">
         <thead>
             <tr>
@@ -62,7 +62,7 @@
         
         
             <tr>
-
+                <h1>{{ object.branche.name}}</h1>
                 <th>{{ object.food.name }}</th>
                 <th>{{ object.price }}</th>
                 
