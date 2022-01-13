@@ -79,6 +79,11 @@ class OrderItem(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+    @property
+    def get_total(self):
+        total=self.item.price * self.quantity
+        return total
     
 
 
@@ -110,6 +115,7 @@ class bill(models.Model):
     branche_status=models.CharField(choices=ORDER_STATUS,max_length=1,null=True,blank=True)
     ordered_date=models.DateTimeField(auto_now_add=True)
     address=models.ForeignKey(Address,on_delete=models.CASCADE,null=True,blank=True)
+    total_price=models.IntegerField()
     
     def __str__(self):
         return str(self.owner)
@@ -117,5 +123,9 @@ class bill(models.Model):
     @property
     def jalali_ordered_date(self):
         return jdatetime.datetime.fromgregorian(datetime=self.ordered_date)
-    
+    @property
+    def card_total(self):
+        orderitems=self.order_item.all()
+        total=sum([item.get_total for item in orderitems])
+        return total
 
