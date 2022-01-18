@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
+from django.http import request
 
 class CostumUser(AbstractUser):
     username = models.CharField(max_length=150,unique=False)
@@ -12,6 +13,7 @@ class CostumUser(AbstractUser):
 class Customer(CostumUser):
     def save(self, *args, **kwargs):
             self.is_staff = False
+          
 
     class Meta:
         proxy=True

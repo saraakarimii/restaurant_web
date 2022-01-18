@@ -12,6 +12,7 @@ from .forms import AddAddressForm
 from django.contrib.auth.decorators import login_required
 from permissions import customer_required
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.http.response import HttpResponseRedirect
 
 @customer_required()
@@ -53,7 +54,7 @@ class OrderHistoryList(ListView):
 @customer_required()
 class EditeProfile(UpdateView):
     model=CostumUser
-    fields=["username","first_name","last_name",]
+    fields=["username","first_name","last_name",'address']
     template_name='pages/edite_add.html'
     success_url ="/costumer/"
     
@@ -61,7 +62,17 @@ class EditeProfile(UpdateView):
 class AddressDelete(DeleteView):
     model=Address
     template_name='pages/delete.html'
-    success_url ="/costumer/bill/"
+    # success_url =
+
+def deletetask(request, pk):
+    
+    address = Address.objects.get(id=pk)
+    address.delete()
+    response = redirect('/costumer/all_address/')
+    return response
+    
+    
+
 @customer_required()
 class EditeAddress(UpdateView):
     model=Address
@@ -92,20 +103,22 @@ class OrderItemDelete(DeleteView):
 @customer_required()
 class bill_view(TemplateView):
     PermissionError_message='you should add from one branche'
-    
+    form_class=AddAddressForm
     template_name='pages/costumer/card_list.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # a=bill.objects.filter(customer_status='O')
+        
         try:
             customer=self.request.user.customer
-            context['mainad'] = CostumUser.objects.filter(id=self.request.user.id)
+            context['mainad'] = CostumUser.objects.get(id=self.request.user.id).address
             context['otheradd']=Customer.objects.get(user=self.request.user).address.all()
-      
-        except:
+        except :
+            
             device=self.request.COOKIES['device']
+            
+            
+            customer=Customer.objects.get_or_create(device=device)[0]
         
-            customer=Customer.objects.get(device=device)
         
         context['orders'] = OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O")
         context['bill_obj']=bill.objects.filter(owner=customer).filter(customer_status="O")
@@ -113,37 +126,57 @@ class bill_view(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
+        
         if request.method == 'POST':
+
             try:
               customer=self.request.user.customer
             
             except:
-                 messages.warning(request, "you should signup." )
+                 messages.warning(request, "you should signup or login first." )
                  return redirect("/costumer/bill/")
+            if request.POST.get("city"):
+                print("djjdjmbhjklbvccvghjk")
+                city=request.POST.get('city')
+                address=request.POST.get('address')
+                postal_code=request.POST.get('postal_code')
+                adress=Address.objects.get_or_create(city=city,address=address,postal_code=postal_code)[0]
+                customer.address.add(adress)
+                customer.save()
+                return redirect("/costumer/bill/")
+            else:
+                
+                branche=OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O").first().item.branche
+                for i in OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O").all():
+                    if i.item.branche!=branche :
+                        messages.warning(request, "you cant add from another branche." )
+                        return redirect("/costumer/bill/")
+                    # if not self.request.user.customer:
+                    #     return redirect("/costumer/bill/")
+                    item=i.item
+                    quantity=i.quantity
+                    item.quantity-=int(quantity)
+                    item.save()
+                bil=bill.objects.filter(owner=self.request.user.customer).filter(customer_status="O").first()
+                
+                addresss =request.POST.get("unmain_add")
+                print(addresss)
+                print("________________________")
+                if addresss:
+                    addresss =str(request.POST.get("unmain_add")).split(",")
+                    city=addresss[0]
+                    address=addresss[1]
+                    postal_code=addresss[2]
+                    adress=Address.objects.get_or_create(city=city,address=address,postal_code=postal_code)[0]
+                    bil.address=adress
+                else:
+                    main_add=request.POST.get("main_add")
+                    bil.address=main_add
 
-            branche=OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O").first().item.branche
-            for i in OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O").all():
-                if i.item.branche!=branche :
-                    messages.warning(request, "you cant add from another branche." )
-                    return redirect("/costumer/bill/")
-                # if not self.request.user.customer:
-                #     return redirect("/costumer/bill/")
-                item=i.item
-                quantity=i.quantity
-                item.quantity-=int(quantity)
-                item.save()
-            addresss =str(request.POST["add"]).split(",")
-            city=addresss[0]
-            address=addresss[1]
-            postal_code=addresss[2]
-            
-            adress=Address.objects.get_or_create(city=city,address=address,postal_code=postal_code)[0]
-            bil=bill.objects.filter(owner=self.request.user.customer).filter(customer_status="O").first()
-            bil.address=adress
-            bil.customer_status='R'
-            bil.choosen_branch=branche
-            bil.save()
-            return HttpResponseRedirect(reverse_lazy('customer_panel'))
+                bil.customer_status='R'
+                bil.choosen_branch=branche
+                bil.save()
+                return HttpResponseRedirect(reverse_lazy('customer_panel'))
 
 
 
@@ -157,6 +190,7 @@ class Add(DetailView):
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             item=MenuItem.objects.get(id=self.kwargs['pk'])
+
            
            
             try:
@@ -165,9 +199,11 @@ class Add(DetailView):
             
               
             except:
+                print("""""""""""")
                 device=request.COOKIES['device']
-                user, created=CostumUser.objects.get_or_create(device=device)
+                print(device)
                 customer=Customer.objects.get_or_create(device=device)[0]
+                print("***************")
             
 
             order, created=bill.objects.get_or_create(owner=customer,customer_status='O')
@@ -184,7 +220,7 @@ class Add(DetailView):
 
             orderitem, created=OrderItem.objects.get_or_create(bill=order,item=item)
             branche=OrderItem.objects.filter(bill__owner=customer).filter(bill__customer_status="O").first().item.branche
-            bil=bill.objects.filter(owner=self.request.user.customer).filter(customer_status="O").first()
+            bil=bill.objects.filter(owner=customer).filter(customer_status="O").first()
             item.quantity-=int(quantity)
             bil.choosen_branch=branche
             bil.save()

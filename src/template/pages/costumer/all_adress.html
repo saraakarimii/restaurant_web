@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block nav %}
 <li class="nav-item active">
    
@@ -28,6 +29,7 @@
     {% endfor %}
 </ul>
 {% endif %}
+<a href="{% url 'add_address' %}" class="btn btn-info">add new address</a>
 
 <table class="table table-striped mt-4">
     <thead>
@@ -35,22 +37,19 @@
             
             <th scope="col">main address</th>
             
-            {% comment %} <th scope="col">edite</th>
-            <th scope="col">delete</th> {% endcomment %}
 
         </tr>
     </thead>
     <tbody id="list2">
         <tr>
-           
-            <th>{{mainad}}</th>
-           
+            <th>{{mainad}} </th>
+            <th>*you can only change your main address from your profile </th>
             
-            
-            
+              
         </tr>
     </tbody>
-
+</table>
+<table class="table table-striped mt-4">
     <thead>
         <tr>
             
@@ -63,10 +62,11 @@
         </tr>
     </thead>
     <tbody id="list2">
+        {% for o in customer_address %}
         <tr>
       
 
-        {% for o in customer_address %}
+        
      
         
 
@@ -82,7 +82,7 @@
                 <a href="{% url 'edite_add' o.pk %}" class="btn btn-info">edit</a>
             </th>
             <th>
-            <a href="{% url 'delete_add' o.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            <a href="{% url 'delete_add' o.pk %}" id="delete" class="btn btn-danger btn-sm">Delete</a>
             </th>
 
         </tr>
@@ -90,3 +90,12 @@
     </tbody> 
 </table>
 {% endblock content %}
+{%block script%}
+<script>
+    var CSRF_TOKEN = '{{ csrf_token }}';
+    var URL = "{% url 'main' %}"
+</script>
+
+<script src={% static 'delete.js' %}></script> 
+{%endblock script%}
+

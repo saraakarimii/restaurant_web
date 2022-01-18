@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+{%load static%}
+{% block style %}
+
+<link href={% static "css/modal.css" %} rel="stylesheet" />
+    
+{% endblock %}
 {% block nav %}
 <li class="nav-item active">
     {% if user.is_authenticated %}
@@ -88,18 +94,48 @@
     
 
     <p>Choose your address</p>
-    <a href="{% url 'add_address' %}" class="btn btn-info">add new address</a>
+    <!-- Trigger/Open The Modal -->
+    
+    <button class="modal-button" href="#myModal1">add new address</button>
+
+    <!-- The Modal -->
+    <div id="myModal1" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">×</span>
+          
+        </div>
+        <div class="modal-body">
+          <form id="address" name="rform"method="POST">
+            {% csrf_token %}
+            <label for="city">city:</label><br>
+            <input type="text" id="city" name="city"><br>  
+            <label for="address">address:</label><br>
+            <input type="text" id="address" name="address"><br>
+            <label for="postal_code">postal code:</label><br>
+            <input type="text" id="postal_code" name="postal_code"><br>
+            <button type="submit" class="save btn btn-default">Save</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+        
+        </div>
+    </div>
+    </div>
+    
     
     <form method="POST">
         {% csrf_token %}
-        {% for mainad in mainad %}
-        <input type="radio" name="add">{{mainad }}
+        {% comment %} {% for mainad in mainad %} {% endcomment %}
+        <input type="radio" name="main_add">{{mainad }}
        
         
-        {%endfor%}
+        {% comment %} {%endfor%} {% endcomment %}
         {% for i in otheradd %}
 
-          <input type="radio"  name="add" value={{i.city}},{{i.address}},{{i.postal_code}}>{{i.city}},{{i.address}},{{i.postal_code}}
+          <input type="radio"  name="unmain_add" value={{i.city}},{{i.address}},{{i.postal_code}}>{{i.city}},{{i.address}},{{i.postal_code}}
           
     
         {%endfor%}
@@ -108,3 +144,6 @@
 </div>
 
 {%endblock content%}
+{%block script%}
+<script src={% static 'js/modal.js' %}></script> 
+{%endblock script%}

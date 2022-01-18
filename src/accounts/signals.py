@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 
 @receiver(post_save, sender=CostumUser)
 def create_profile(sender, instance, created, **kwargs):
+   
     
    
     if created :
@@ -13,4 +14,11 @@ def create_profile(sender, instance, created, **kwargs):
            Branche.objects.create(user=instance)
            
         else:
-            Customer.objects.create(user=instance)
+
+            C=Customer.objects.get(device=instance.device)
+            print(C)
+            if C:
+                C.user=instance
+                C.save()
+            else:
+                Customer.objects.create(user=instance)

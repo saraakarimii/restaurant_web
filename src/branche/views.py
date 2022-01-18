@@ -116,6 +116,7 @@ class EditeProfile(UpdateView):
     template_name='pages/edite_add.html'
     success_url ="/branche/"
 @is_staff_required()
+
 class orders(TemplateView):
     template_name='pages/branche/orders.html'
     def get_context_data(self, **kwargs):
